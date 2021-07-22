@@ -1,0 +1,78 @@
+﻿@model IEnumerable<WebApp.Areas.Admin.Models.AdminModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="text-center">Danh Sách Quản Trị</h1>
+<form asp-action="Index" asp-controller="Admin">
+    <div class="form-group">
+        <label class="control-label">Nhập Tên</label>
+        <input  name="search" class="form-control" />
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Tìm" class="btn btn-primary w-100" />
+    </div>
+</form>
+<hr />
+
+<p>
+    <a class="btn btn-success" onclick="showInPopup('@Url.Action("AddOrEdit","Admin",null,Context.Request.Scheme)','Thêm mới Admin')">Tạo mới</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Phone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.AccountName)
+            </td>
+            <td>
+            <td>
+                <a class="btn btn-warning" onclick="showInPopup('@Url.Action("AddOrEdit","Admin",new {id=item.Id },Context.Request.Scheme)','Thêm mới Admin')">Chỉnh Sửa</a>
+            </td>
+            <td>
+                <a class="btn btn-info" asp-action="Profile" asp-route-id="@item.Id">Details</a>
+            </td>
+            <td>
+                <form asp-action="Delete" asp-route-id="@item.Id" onsubmit="jQueryAjaxDelete(this)" class="d-inline">
+                    <input type="hidden" asp-for="@item.Id" />
+                    <input type="submit" value="Xoá" class="btn btn-danger " />
+                </form>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,73 @@
+﻿@model IEnumerable<WebApp.Areas.Admin.Models.LessonModel>
+
+@{
+    ViewData["Title"] = "Statistical";
+}
+<h3>Thống kê bài giãng được nhiều tương tác nhất theo từng khoá học</h3>
+<form asp-action="Statistical" asp-controller="HomeAdmin">
+    <div class="form-group">
+        <label class="control-label">Nhập Khoá Học</label>
+        <select name="id" class="form-control" asp-items="ViewBag.IdCourse"></select>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Tìm" class="btn btn-primary w-100" />
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.LessonName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Video)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Content)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Course)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Coach)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody class="overflow-auto">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="col-sm-2">
+                    @Html.DisplayFor(modelItem => item.LessonName)
+                </td>
+                <td class="col-sm-2">
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td class="col-sm-2">
+                    @Html.DisplayFor(modelItem => item.Video)
+                </td>
+                <td class="col-sm-2">
+                    @Html.Raw(item.Content)
+                </td>
+                <td class="col-sm-2">
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Course.Description)
+                </td>
+                <td class="col-sm-2">
+                    @Html.DisplayFor(modelItem => item.CommemtLessons.Count)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

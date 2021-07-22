@@ -1,0 +1,59 @@
+﻿@model IEnumerable<WebApp.Areas.Admin.Models.CommemtLessonModel>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a class="btn btn-success" onclick="showInPopup('@Url.Action("AddOrEdit","CommemtLesson",null,Context.Request.Scheme)','Thêm mới CommemtLesson')">Tạo mới</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Content)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Lesson)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Lesson)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Content)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lesson.LessonName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.AccountName)
+            </td>
+            <td>
+                <a class="btn btn-warning text-white" onclick="showInPopup('@Url.Action("AddOrEdit","CommemtLesson",null,Context.Request.Scheme)','Chỉnh sửa CommemtLesson')">Chỉnh sửa</a>|
+                <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <form asp-action="Delete" asp-route-id="@item.Id" onsubmit="jQueryAjaxDelete(this)" class="d-inline">
+                    <input type="hidden" asp-for="@item.Id" />
+                    <input type="submit" value="Xoá" class="btn btn-danger " />
+                </form>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

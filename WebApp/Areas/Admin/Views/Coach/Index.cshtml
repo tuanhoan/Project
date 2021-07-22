@@ -1,0 +1,8 @@
+﻿@model IEnumerable<WebApp.Areas.Admin.Models.CoachModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<div id="view-all">
+    @await Html.PartialAsync("_ViewAll", Model)
+</div>

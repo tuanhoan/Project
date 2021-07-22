@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    @await Html.PartialAsync("_HeadPartial.cshtml")
+    @RenderSection("CSS",false)
+</head>
+<body id="page-top">
+    <div id="wrapper" class="con">
+
+        @await Html.PartialAsync("_MenuPartial.cshtml")
+        <div id="content-wrapper" class="d-flex flex-column">
+            @await Html.PartialAsync("_HeaderPartial.cshtml")
+            <div class="container-fluid">
+                <!-- Page Heading -->
+                @RenderBody()
+            </div>
+            @await Html.PartialAsync("_FooterPartial.cshtml")
+        </div>
+        <!-- End of Content Wrapper -->
+    </div>
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Bạn chắc chắn muốn đăng xuất</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Chọn Đăng xuất. Tài khoản bạn sẽ được đăng xuất.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Thoát</button>
+                    <a class="btn btn-primary" asp-action="Logout" asp-controller="User" asp-area="Admin">Đăng Xuất</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <partial name="_PartialJS" />
+
+    @RenderSection("Script", required: false)
+    @RenderSection("JS", required: false)
+</body>
+</html>

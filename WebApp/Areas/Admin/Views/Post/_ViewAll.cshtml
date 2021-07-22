@@ -1,0 +1,54 @@
+﻿@model IEnumerable<WebApp.Areas.Admin.Models.PostModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<p>
+    <a class="btn btn-success" onclick="showInPopup('@Url.Action("AddOrEdit","Post",null,Context.Request.Scheme)','Thêm Mới Bài Viết')">Tạo mới</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripsion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Content)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User.AccountName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descripsion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Content)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.AccountName)
+                </td>
+                <td>
+                    <a class="btn btn-warning" onclick="showInPopup('@Url.Action("AddOrEdit","Post",new {id=item.Id },Context.Request.Scheme)','Chỉnh sửa')">Chỉnh Sửa</a>
+                    <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id">Chi tiết</a> |
+                    <form asp-action="Delete" asp-route-id="@item.Id" onsubmit="return jQueryAjaxDelete(this)" class="d-inline">
+                        <input type="hidden" asp-for="@item.Id" />
+                        <input type="submit" value="Xóa" class="btn btn-danger" />
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

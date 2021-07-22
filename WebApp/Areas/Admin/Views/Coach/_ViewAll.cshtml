@@ -1,0 +1,60 @@
+﻿@model IEnumerable<WebApp.Areas.Admin.Models.CoachModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+    <p>
+        <a class="btn btn-success" onclick="showInPopup('@Url.Action("AddOrEdit","Coach",null,Context.Request.Scheme)','Thêm mới Coach')" >Tạo mới Coach</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FullName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Address)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Phone)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.User)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FullName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Address)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Phone)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.User.AccountName)
+                    </td>
+                    <td>
+                        <a class="btn btn-warning" onclick="showInPopup('@Url.Action("AddOrEdit","Coach", new {id= item.Id },Context.Request.Scheme)','Chỉnh sửa Coach')">Chỉnh sửa</a> |
+                        <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id">Chi tiết</a> |
+                        <form asp-action="Delete" asp-route-id="@item.Id" onsubmit="return jQueryAjaxDelete(this)" class="d-inline">
+                            <input type="hidden" asp-for="@item.Id" />
+                            <input type="submit" value="Xóa" class="btn btn-danger" />
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>

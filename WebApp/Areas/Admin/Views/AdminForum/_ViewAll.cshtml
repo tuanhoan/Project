@@ -1,0 +1,61 @@
+﻿@model IEnumerable<WebApp.Areas.Admin.Models.AdminForumModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<h1>Danh Sách AdminForum</h1>
+<p>
+    <a class="btn btn-success" onclick="showInPopup('@Url.Action("AddOrEdit","AdminForum",null,Context.Request.Scheme)','Thêm AdminForum')">Tạo Mới</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Phone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.AccountName)
+                </td>
+                <td>
+                    <a class="btn btn-warning" onclick="showInPopup('@Url.Action("AddOrEdit","AdminForum",new {id=item.Id},Context.Request.Scheme)','Chỉnh Sửa AdminForum')">Chỉnh Sửa</a> |
+                    <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id">Chi Tiết</a> |
+                    <form asp-action="Delete" asp-route-id="@item.Id" onsubmit="return jQueryAjaxDelete(this)" class="d-inline">
+                        <input type="hidden" asp-for="@item.Id" />
+                        <input type="submit" value="Xoá" class="btn btn-danger" />
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

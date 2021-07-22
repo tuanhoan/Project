@@ -1,0 +1,52 @@
+﻿@model IEnumerable<WebApp.Areas.Admin.Controllers.ThongKe>
+@{
+    ViewData["Title"] = "Thống kê";
+}
+<div class="input-group ">
+    <form asp-action="ThongKeCommentLesson" class="col-5">
+            <select name="id" class="custom-select"  id="inputGroupSelect04" asp-items="ViewBag.LessonList">
+                <option>Vui Lòng Chọn Bài Học...</option>
+            </select>
+            <button class="btn btn-outline-success" type="submit">Button</button>
+    </form>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Tên Bài Học</th>
+                <th scope="col">Nội Dung Bình Luận</th>
+                <th scope="col">Tên Học Sinh</th>
+                <th scope="col">Tên Tài Khoản</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.Data)
+            {
+                <tr>
+                    <th>
+                        @item.LessonName
+                    </th>
+                    <td>
+                        @item.Content
+
+                    </td>
+                    <td>
+                        @if (item.FullName != null)
+                        {
+                            @item.FullName;
+                        }
+                        else
+                        {
+                            <div>
+                                Chưa đăng kí học sinh
+                            </div>
+                        }
+                    </td>
+                    <td>
+                        @item.AccountName
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>

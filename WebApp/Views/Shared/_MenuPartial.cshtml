@@ -1,0 +1,144 @@
+﻿
+<ul class=" navbar-nav slide bg-dark sidebar sidebar-dark accordion" id="accordionSidebar" style="z-index: 1000">
+
+    <!-- Sidebar - Brand -->
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#l">
+        <div class="sidebar-brand-icon rotate-n-15">
+            <i class="fas fa-laugh-wink"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">404 Not Found <sup>2</sup></div>
+    </a>
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        Hoạt động
+    </div>
+
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-clock"></i>
+            <span>Lịch sử</span>
+        </a>
+    </li>
+
+    <!-- Nav Item - Utilities Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
+            <i class="far fa-bookmark"></i>
+            <span>Đã lưu</span>
+        </a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        Trang
+    </div>
+
+    <!-- Nav Item - menu khoahoc -->
+    @{ 
+        List<CourseModel> listCourseModel = new List<CourseModel>();
+        using (var client = new HttpClient())
+        {
+            using (var response = await client.GetAsync("https://localhost:44379/api/CourseAPI/"))
+            {
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                listCourseModel = JsonConvert.DeserializeObject<List<CourseModel>>(apiResponse);
+            }
+        }
+    }
+    <li class="nav-item">
+        <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+            <i class="fas fa-book-open"></i>
+            <span>Khóa học</span>
+        </a>
+        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Lập trình:</h6>
+                @foreach (var item in listCourseModel)
+                {
+                    <a class="collapse-item" style="white-space:normal" href="#">@item.Title</a>
+                }
+
+
+                @*<div class="collapse-divider"></div>
+                <h6 class="collapse-header">Văn phòng:</h6>
+                <a class="collapse-item" href="#">Microsoft Word 2016</a>
+                <a class="collapse-item" href="#">Microsoft Excel 2016</a>
+                <a class="collapse-item" href="#">Microsoft PowerPoint 2016</a>*@
+            </div>
+        </div>
+
+    @*<div class="btn-group dropright">
+            <button type="button" class="btn btn-secondary dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Khóa học
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <h6 class="dropdown-header">Lập trình:</h6>
+                <a class="dropdown-item" href="#">Lập trình Android</a>
+                <a class="dropdown-item" href="#">Lập trình C++</a>
+                <a class="dropdown-item" href="#">Lập trình C# .Net</a>
+                <a class="dropdown-item" href="#">Lập trình Java</a>
+                <a class="dropdown-item" href="#">Unity3D</a>
+
+                <div class="dropdown-divider"></div>
+                <h6 class="dropdown-header">Văn phòng:</h6>
+                <a class="dropdown-item" href="#">Microsoft Word 2016</a>
+                <a class="dropdown-item" href="#">Microsoft Excel 2016</a>
+                <a class="dropdown-item" href="#">Microsoft PowerPoint 2016</a>
+            </div>
+        </div>*@
+
+    <!-- Nav Item - baiviet -->
+    <li class="nav-item">
+        <a class="nav-link" asp-action="IndexPost" asp-controller="Home">
+            <i class="far fa-newspaper"></i>
+            <span>Bài viết</span>
+        </a>
+    </li>
+
+    <!-- Nav Item - Tag -->
+    <li class="nav-item">
+        <a class="nav-link" href="#">
+            <i class="fas fa-tag"></i>
+            <span>Tag</span>
+        </a>
+    </li>
+
+    <!-- Nav Item - hoidap -->
+    <li class="nav-item">
+        <a class="nav-link" href="#">
+            <i class="fas fa-question"></i>
+            <span>Hỏi đáp</span>
+        </a>
+    </li>
+
+    <!-- Nav Item - tai tro -->
+    <li class="nav-item">
+        <a class="nav-link" href="#">
+            <i class="fas fa-mug-hot"></i>
+            <span>Tài trợ</span>
+        </a>
+    </li>
+
+    <!-- Nav Item - thongtinKteam -->
+    <li class="nav-item">
+        <a class="nav-link" href="#">
+            <i class="fas fa-info-circle"></i>
+            <span>Về 404</span>
+        </a>
+    </li>
+
+
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
+
+    <!-- Sidebar Toggler (Sidebar) -->
+    <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
+
+</ul>

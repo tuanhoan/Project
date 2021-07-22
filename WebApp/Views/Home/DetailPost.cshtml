@@ -1,0 +1,276 @@
+﻿@model  IEnumerable<WebApp.Controllers.HomeController.PostIndex>
+@{ 
+    ViewData["Title"] = "Post Page";
+    var listComment = ViewBag.ListComment as IEnumerable<WebApp.Areas.Admin.Models.CommemtPostModel>;
+}
+@section CSS{
+    <style>
+        .be-comment-block {
+            margin-bottom: 50px !important;
+            border: 1px solid #edeff2;
+            border-radius: 2px;
+            padding: 50px 70px;
+            border: 1px solid #ffffff;
+        }
+
+        .comments-title {
+            font-size: 16px;
+            color: #262626;
+            margin-bottom: 15px;
+            font-family: 'Conv_helveticaneuecyr-bold';
+        }
+
+        .be-img-comment {
+            width: 60px;
+            height: 60px;
+            float: left;
+            margin-bottom: 15px;
+        }
+
+        .be-ava-comment {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+        }
+
+        .be-comment-content {
+            margin-left: 80px;
+        }
+
+            .be-comment-content span {
+                display: inline-block;
+                width: 49%;
+                margin-bottom: 15px;
+            }
+
+        .be-comment-name {
+            font-size: 13px;
+            font-family: 'Conv_helveticaneuecyr-bold';
+        }
+
+        .be-comment-content a {
+            color: #383b43;
+        }
+
+        .be-comment-content span {
+            display: inline-block;
+            width: 49%;
+            margin-bottom: 15px;
+        }
+
+        .be-comment-time {
+            text-align: right;
+        }
+
+        .be-comment-time {
+            font-size: 11px;
+            color: #b4b7c1;
+        }
+
+        .be-comment-text {
+            font-size: 13px;
+            line-height: 18px;
+            color: #7a8192;
+            display: block;
+            background: #f6f6f7;
+            border: 1px solid #edeff2;
+            padding: 15px 20px 20px 20px;
+        }
+
+        .form-group.fl_icon .icon {
+            position: absolute;
+            top: 1px;
+            left: 16px;
+            width: 48px;
+            height: 48px;
+            background: #f6f6f7;
+            color: #b5b8c2;
+            text-align: center;
+            line-height: 50px;
+            -webkit-border-top-left-radius: 2px;
+            -webkit-border-bottom-left-radius: 2px;
+            -moz-border-radius-topleft: 2px;
+            -moz-border-radius-bottomleft: 2px;
+            border-top-left-radius: 2px;
+            border-bottom-left-radius: 2px;
+        }
+
+        .form-group .form-input {
+            font-size: 13px;
+            line-height: 50px;
+            font-weight: 400;
+            color: #b4b7c1;
+            width: 100%;
+            height: 50px;
+            padding-left: 20px;
+            padding-right: 20px;
+            border: 1px solid #edeff2;
+            border-radius: 3px;
+        }
+
+        .form-group.fl_icon .form-input {
+            padding-left: 70px;
+        }
+
+        .form-group textarea.form-input {
+            height: 150px;
+        }
+        ul {
+            list-style: none;
+        }
+    </style>
+}
+<div class="row">
+    <div class="col-xl-12 col-lg-12">
+
+        <!-- Area Chart -->
+        @foreach (var item in Model)
+        {
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <img src="~/Img//User/@item.Img" class="rounded-circle" style="width:20px" alt="Alternate Text" />
+                    <span>@item.name</span>|
+                    <span>Roles: @item.roles</span>
+                </div>
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Nội Dung</h6>
+                </div>
+                <div class="card-body overflow-auto">
+                        @Html.Raw(item.Content)
+                </div>
+            </div>
+        }
+        </div>
+</div>
+<div class="be-comment-block">
+    <h1 class="comments-title">Comments (3)</h1>
+    <ul id="commentPost">
+   @if (listComment != null)
+    {
+        @foreach (var item in listComment)
+        {
+            <li>
+                <div class="be-comment">
+                    <div class="be-img-comment">
+                        <a href="blog-detail-2.html">
+                            <img src="~/Img/User/@item.User.Img" alt="" class="be-ava-comment">
+                        </a>
+                    </div>
+                    <div class="be-comment-content">
+                        <span class="be-comment-name">
+                            <h5>
+                                @item.User.AccountName
+                            </h5>
+                        </span>
+                        <p class="be-comment-text">
+                            @item.Content
+                        </p>
+                    </div>
+                </div>
+            </li>
+        }
+    }
+    </ul>
+    <form class="form-block">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12">
+                <div class="form-group">
+                    <textarea class="form-input" placeholder="Nội dung bình luận" id="messageInput"></textarea>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                @if (Context.User.Identity.IsAuthenticated)
+                {
+                    //Lay du lieu ve tai khoan dang dang nhap
+                    string img = "";
+                    string id = "";
+                    img = Context.User.Claims.ToList()[3].Value;
+                    id = Context.User.Claims.ToList()[2].Value;
+                    <input class="btn btn-primary text-white" type="button" id="sendButton" value="Bình luận" />
+                    <input type="hidden" value="@Context.User.Identity.Name" id="userInput" />
+                    <input type="hidden" value="/Img/User/@img" id="avatarInput" />
+                    <input type="hidden" value="@id" id="idInput" />
+                    <input type="hidden" value="@Model.First().idPost" id="idPostInput" />
+                }
+                @if (!Context.User.Identity.IsAuthenticated)
+                {
+                    <a class="btn btn-primary text-white" asp-action="Login" asp-controller="User" asp-area="Admin">Đăng nhập</a>
+                }
+            </div>
+        </div>
+    </form>
+</div>
+@section JS{
+
+    <script>
+            "use strict";
+
+            var connection = new signalR.HubConnectionBuilder().withUrl("/DetailPost").build();
+
+            //Disable send button until connection is established
+            document.getElementById("sendButton").disabled = true;
+
+            //Tạo ra khung html để đưa lên 
+            connection.on("ReceiveMessage", function (user, message, avatar) {
+
+
+
+                var html = '';
+                html += '<div class="be-comment"> ';
+                html += '<div class="be-img-comment"> ';
+                html += '<a href="blog-detail-2.html"> ';
+                html += '<img src="' + avatar + '" alt="" class="be-ava-comment"> ';
+                html += '</a> ';
+                html += '</div> ';
+                html += '<div class="be-comment-content"> ';
+                html += '<span class="be-comment-name"> ';
+                html += '<h5>' + user + '</h5> ';
+                html += '</span> ';
+                html += '<p class="be-comment-text"> ';
+                html += ' ' + message;
+                html += '  </p> ';
+                html += '  </div> ';
+                html += '  </div> ';
+                var cmt = document.createElement("LI");
+                cmt.innerHTML = html
+                document.getElementById("commentPost").appendChild(cmt);
+                document.getElementById("messageInput").value = "";
+
+            });
+
+            //kết nối
+            connection.start().then(function () {
+                document.getElementById("sendButton").disabled = false;
+            }).catch(function (err) {
+                return console.error(err.toString());
+            });
+
+            //Xu li click
+            document.getElementById("sendButton").addEventListener("click", function (event) {
+
+                var avatar = document.getElementById("avatarInput").value;
+                var user = document.getElementById("userInput").value;
+                var message = document.getElementById("messageInput").value;
+                var idUser = document.getElementById("idInput").value;
+                var idLesson = document.getElementById("idPostInput").value;
+
+                // Dua du lieu len api de luu vao csdl
+                var data = { "Title": "Đây là một comment", "Content": message, "IdPost": idLesson, "IdUser": idUser };
+                var json = JSON.stringify(data);
+                $.ajax({
+                    method: 'POST',
+                    url: 'https://localhost:44379/api/CommemtPostAPI',
+                    contentType: 'application/json',
+                    accepts: 'application/json',
+                    data: json,
+                })
+                connection.invoke("SendMessage", user, message, avatar).catch(function (err) {
+                    return console.error(err.toString());
+                });
+
+
+
+                event.preventDefault();
+            });
+    </script>
+ }

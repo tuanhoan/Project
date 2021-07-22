@@ -1,0 +1,59 @@
+﻿@model IEnumerable<WebApp.Areas.Admin.Models.StudentModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<h1>Index</h1>
+
+<p>
+    <a class="btn btn-success" onclick="showInPopup('@Url.Action("AddOrEdit","Student",null,Context.Request.Scheme)','Thêm Mới Học Sinh')">Tạo mới</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Phone)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="AllStudent">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </td>
+               
+                <td>
+                    <a class="btn btn-warning" onclick="showInPopup('@Url.Action("AddOrEdit","Student",new {id=item.Id },Context.Request.Scheme)','Chỉnh sửa')">Chỉnh Sửa</a>|
+                    <button class="btn btn-warning" onclick="DeleteStudentApi(@item.Id)">Xóa</button>
+                </td>
+
+            </tr>
+            
+        }
+    </tbody>
+</table>
+
+
+
+

@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    @await Html.PartialAsync("_HeadPartial.cshtml")
+    <partial name="_PartialCSS" />
+    @RenderSection("CSS",false)
+</head>
+<body id="page-top">
+    <div id="wrapper">
+
+        @await Html.PartialAsync("_MenuPartial.cshtml")
+        <div id="content-wrapper" class="d-flex flex-column">
+            @await Html.PartialAsync("_HeaderPartial.cshtml")
+            <div class="container-fluid">
+                <!-- Page Heading -->
+                @RenderBody()
+            </div>
+            @await Html.PartialAsync("_FooterPartial.cshtml")
+        </div>
+        <!-- End of Content Wrapper -->
+    </div>
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Chọn Đăng xuất. Tài khoản bạn sẽ được đăng xuất.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Thoát</button>
+                    <a class="btn btn-primary" asp-action="Logout" asp-controller="User">Đăng Xuất</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" tabindex="-1" role="dialog" id="form-modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* Noi de model thong bao thanh cong *@
+    <div class="modal" tabindex="-1" role="dialog" id="AddOrEdit-modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Thông Báo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Thành Công
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="button" data-dismiss="modal">Thoát</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <partial name="_PartialJS" />
+
+    @RenderSection("Scripts", required: false)
+    @RenderSection("JS", required: false)
+</body>
+</html>
